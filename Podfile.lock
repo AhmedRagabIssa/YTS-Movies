@@ -1,0 +1,21 @@
+PODS:
+  - Alamofire (4.7.0)
+  - Kingfisher (4.6.4)
+  - ReachabilitySwift (3)
+  - SwiftyJSON (4.0.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.4)
+  - Kingfisher (~> 4.0)
+  - ReachabilitySwift (~> 3)
+  - SwiftyJSON
+
+SPEC CHECKSUMS:
+  Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
+  Kingfisher: 68498a706e46c2a050b0c9572f100e5db407f6e0
+  ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
+  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+
+PODFILE CHECKSUM: 3e477cdbba1a595007d1ae7c9d25ebf9fe62114d
+
+COCOAPODS: 1.4.0
