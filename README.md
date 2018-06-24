@@ -1,3 +1,3 @@
 # YTS-Movies
-YTS movies client iOS Application
-This is just a demo to my work
+YTS movies client iOS Application using swift
+# This is just a demo to my work
