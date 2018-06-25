@@ -12,9 +12,8 @@ import SwiftyJSON
 class MovieServices {
     private let serviceManager = ServiceManager()
     
-    func listMovies(page: Int, complation: @escaping (_ response: [Movie]?, _ Error: ErrorHandler?) -> Void){
+    func listMovies(page: Int, complation: @escaping (_ response: ListMovieResponse?, _ Error: ErrorHandler?) -> Void){
         let request = ListMoviesRequest(page)
-
         serviceManager.RequestService(request){ (response, error) in
             if let err = error { // that means there is error in the request
                 print("their is error in the list movies service")
@@ -28,7 +27,7 @@ class MovieServices {
 //                    print("-------")
 //                    print(movieResponse.data)
 //                    print("-------")
-                    complation(movieResponse.data, nil)
+                    complation(movieResponse, nil)
                 } else {
                     complation(nil, ErrorHandler("error in the list movies 1"))
                 }
@@ -37,7 +36,7 @@ class MovieServices {
     }
     
     
-    func searchMovies(page: Int,query: String, complation: @escaping (_ response: [Movie]?, _ Error: ErrorHandler?) -> Void){
+    func searchMovies(page: Int,query: String, complation: @escaping (_ response: ListMovieResponse?, _ Error: ErrorHandler?) -> Void){
         let request = SearchMoviesRequest(pageNumber: page, query: query)
         
         serviceManager.RequestService(request){ (response, error) in
@@ -53,7 +52,7 @@ class MovieServices {
                     //                    print("-------")
                     //                    print(movieResponse.data)
                     //                    print("-------")
-                    complation(movieResponse.data, nil)
+                    complation(movieResponse, nil)
                 } else {
                     complation(nil, ErrorHandler("error in the search movies 1"))
                 }

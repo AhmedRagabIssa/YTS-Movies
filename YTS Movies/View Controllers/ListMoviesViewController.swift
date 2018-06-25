@@ -2,6 +2,7 @@
 //  ViewController.swift
 //  YTS Movies
 //
+//
 //  Created by Ahmed Ragab Issa on 6/21/18.
 //  Copyright © 2018 Ragab. All rights reserved.
 //
@@ -28,6 +29,12 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
         }
     }
     
+    // this var is for managing pagination and loading data for next page
+    var currentResponseMoviesCount = 0
+    
+    // this var for storing the search query
+    var searchQuery: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,9 +60,11 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
     
     // this func is for loading more movies at the end of the table view
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if self.movies.count - 1 == indexPath.row {
+        if self.movies.count - 1 == indexPath.row , self.movies.count < self.currentResponseMoviesCount {
             if !tableViewIsForSearch { // make sure that the table currently is for listing moves and not for displaying the search result
                 loadMovies()
+            } else {
+                searchMovies()
             }
         }
     }
@@ -70,7 +79,9 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
             // mark the table view for displaying search result
             tableViewIsForSearch = true
             
-            searchMovies(query: queryTerm)
+            self.searchQuery = queryTerm
+            
+            searchMovies()
             
             searchBar.showsCancelButton = true
         }
@@ -124,11 +135,12 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
         
         let moviesOperations = MovieServices()
         
-        moviesOperations.listMovies(page: nextPageNumber, complation: {(movies, error) in
+        moviesOperations.listMovies(page: nextPageNumber, complation: {(listMovieResponse, error) in
             if let err = error{
                 print(err.localizedDescription)
-            } else {
-                self.movies.append(contentsOf: movies!)
+            } else if let movies = listMovieResponse?.data {
+                self.movies.append(contentsOf: movies)
+                self.currentResponseMoviesCount = listMovieResponse?.moviesCount ?? 0
                 self.moviesTableView.reloadData()
                 
                 // For pagination: increment the number of page to be loaded next
@@ -140,18 +152,22 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
         })
     }
     
-    func searchMovies(query: String){
+    func searchMovies(){
         // start the activity indicator and disable the user interaction events
         startActivityIndicator()
 
         let moviesOperations = MovieServices()
         
-        moviesOperations.searchMovies(page: nextPageNumber, query: query, complation: {(movies, error) in
+        moviesOperations.searchMovies(page: nextPageNumber, query: searchQuery, complation: {(listMovieResponse, error) in
             if let err = error{
                 print(err.localizedDescription)
-            } else {
-                self.movies.append(contentsOf: movies!)
+            } else if let movies = listMovieResponse?.data{
+                self.movies.append(contentsOf: movies)
+                self.currentResponseMoviesCount = listMovieResponse?.moviesCount ?? 0
                 self.moviesTableView.reloadData()
+                
+                // For pagination: increment the number of page to be loaded next
+                self.nextPageNumber+=1
                 
                 // stop the activity indicator and enable the user interaction events
                 self.stopActivityIndicator()

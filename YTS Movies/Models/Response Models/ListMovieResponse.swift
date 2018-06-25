@@ -13,13 +13,16 @@ class ListMovieResponse {
     var status: String!
     var statusMessage: String!
     var data: [Movie] = [Movie]()
+    var moviesCount: Int!
+//    var moviesPerPageLimit: Int!
     
     init(_ json: JSON) {
         status = json["status"].stringValue
         statusMessage = json["status_message"].stringValue
         if json["data"] != JSON.null {
+            self.moviesCount = json["data"]["movie_count"].intValue
+//            self.moviesPerPageLimit = json["data"]["limit"].intValue
             if let movies = json["data"]["movies"].array {
-            
                 for movie in movies {
                     let genresJson = movie["genres"].arrayValue
                     var genres: [String] = [String]()
