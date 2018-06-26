@@ -42,19 +42,17 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
         
         loadMovies()
     }
-
+    //    MARK:- TableView Delegtes
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = moviesTableView.dequeueReusableCell(withIdentifier: "MovieCell") as! MoviesTableViewCell
-        cell.movieTitle.text = movies[indexPath.row].title
-        cell.movieRating.text = "⭐️  \(movies[indexPath.row].rate ?? 0) / 10"
-        cell.movieGenres.text = movies[indexPath.row].genres.joined(separator: ", ")
-        let imgURL = URL(string: movies[indexPath.row].imgURL!)
-        let recource = ImageResource(downloadURL: imgURL!)
-        cell.movieImage.kf.setImage(with: recource)
+        
+        // configure the cell with the model (Movie object)
+        cell.configure(with: movies[indexPath.row])
+       
         return cell
     }
     

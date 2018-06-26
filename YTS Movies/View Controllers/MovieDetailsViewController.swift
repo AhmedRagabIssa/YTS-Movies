@@ -180,11 +180,10 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.movieCastTableView.dequeueReusableCell(withIdentifier: "ActorCell") as! ActorTableViewCell
-        let actorImgURL = URL(string: self.movieDetails.cast![indexPath.row].imgURL ?? imageNotFound)
-        let resource = ImageResource(downloadURL: actorImgURL!)
-        cell.actorImage?.kf.setImage(with: resource)
-        cell.actorName.text = self.movieDetails.cast![indexPath.row].name
-        cell.actorCharacter.text = self.movieDetails.cast![indexPath.row].characterName
+        
+        // configure the cell with the model (Actor object)
+        cell.configure(with: self.movieDetails.cast![indexPath.row])
+        
         return cell
     }
 }

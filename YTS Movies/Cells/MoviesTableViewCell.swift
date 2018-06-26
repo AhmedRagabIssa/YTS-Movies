@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 /// This class representing cell for Movies Table View
 class MoviesTableViewCell: UITableViewCell {
@@ -25,6 +26,17 @@ class MoviesTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    // configure the cell given the Movie object
+    func configure(with data: Movie){
+        self.movieTitle.text = data.title
+        self.movieRating.text = "⭐️  \(data.rate ?? 0) / 10"
+        self.movieGenres.text = data.genres.joined(separator: ", ")
+        let imgURL = URL(string: data.imgURL!)
+        let recource = ImageResource(downloadURL: imgURL!)
+        self.movieImage.kf.setImage(with: recource)
+        self.selectionStyle = .none
     }
 
 }

@@ -11,7 +11,7 @@ import Alamofire
 
 class ListMoviesRequest: Request {
    
-    private var page: Int!
+    private var page: Int
     
     init(_ page: Int){
         self.page = page
@@ -22,11 +22,8 @@ class ListMoviesRequest: Request {
     }
     
     override var parameters: Parameters{
-        if let page = self.page {
-            let parms: Parameters = ["page": page]
-            return parms
-        }
-        return [:]
+        let parms: Parameters = ["page": page]
+        return parms
     }
     
     override var method: HTTPMethod{

@@ -11,8 +11,8 @@ import Alamofire
 
 class SearchMoviesRequest: Request {
     
-    private var page: Int!
-    private var query: String!
+    private var page: Int
+    private let query: String
     
     init(pageNumber page: Int, query: String){
         self.page = page
@@ -24,11 +24,8 @@ class SearchMoviesRequest: Request {
     }
     
     override var parameters: Parameters{
-        if let page = self.page, let query = self.query{
-            let parms: Parameters = ["page": page, "query_term": query]
-            return parms
-        }
-        return [:]
+        let parms: Parameters = ["page": page, "query_term": query]
+        return parms
     }
     
     override var method: HTTPMethod{
