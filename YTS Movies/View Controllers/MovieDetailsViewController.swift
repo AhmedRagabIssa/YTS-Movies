@@ -117,8 +117,6 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
     // this is the action for the navigation bar share button
     @objc func shareMovie(){
         
-        
-        
         let shareActivityViewController = UIActivityViewController(activityItems: ["I recommend this movie to you" , "\"\(self.movieDetails.title ?? "")\"", self.movieDetails.movieURL ?? ""], applicationActivities: nil)
         shareActivityViewController.popoverPresentationController?.sourceView = self.view
         
@@ -128,8 +126,20 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
     // this func is for openning the URL when tap on the URL link
     @objc func uRLTapGesture(){
         if let url = URL(string: movieURL.text ?? ""){
-            if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//            if UIApplication.shared.canOpenURL(url) {
+//                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//            }
+            
+            self.performSegue(withIdentifier: "movieWebView", sender: self)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "movieWebView"{
+            let movieWebViewController: MovieWebViewController = segue.destination as! MovieWebViewController
+            
+            if let url = self.movieURL.text {
+                movieWebViewController.movieURL = url
             }
         }
     }

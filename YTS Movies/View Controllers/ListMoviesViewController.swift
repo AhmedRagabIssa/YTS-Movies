@@ -8,7 +8,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 
 class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate{
