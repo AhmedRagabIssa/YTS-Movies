@@ -108,8 +108,22 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
         // add the the gesture for open the URL when tap on it
         movieURL.isUserInteractionEnabled = true
         movieURL.addGestureRecognizer(movieURLTapGesture)
+        
+        // configure the navigation bar share button
+        let navBarShareButton = UIBarButtonItem(title: "Share", style: .done, target: self, action: #selector(shareMovie))
+        self.navigationItem.rightBarButtonItem = navBarShareButton
     }
     
+    // this is the action for the navigation bar share button
+    @objc func shareMovie(){
+        
+        
+        
+        let shareActivityViewController = UIActivityViewController(activityItems: ["I recommend this movie to you" , "\"\(self.movieDetails.title ?? "")\"", self.movieDetails.movieURL ?? ""], applicationActivities: nil)
+        shareActivityViewController.popoverPresentationController?.sourceView = self.view
+        
+        self.present(shareActivityViewController, animated: true, completion: nil)
+    }
     
     // this func is for openning the URL when tap on the URL link
     @objc func uRLTapGesture(){
