@@ -9,10 +9,12 @@
 import UIKit
 import Kingfisher
 
-class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
    
     // cast table hight outlet
     @IBOutlet weak var movieCastTableViewHeightContrains: NSLayoutConstraint!
+    
+    @IBOutlet weak var movieImagesPageController: UIPageControl!
     
     // the movie id that passed from the listMoviesViewController
     var movieId: Int?
@@ -112,6 +114,9 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
         // configure the navigation bar share button
         let navBarShareButton = UIBarButtonItem(title: "Share", style: .done, target: self, action: #selector(shareMovie))
         self.navigationItem.rightBarButtonItem = navBarShareButton
+        
+        // set the delegate of the movie images scroll view to self to configure the page controller
+        movieImagesScrollView.delegate = self
     }
     
     // this is the action for the navigation bar share button
@@ -125,7 +130,7 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
     
     // this func is for openning the URL when tap on the URL link
     @objc func uRLTapGesture(){
-        if let url = URL(string: movieURL.text ?? ""){
+        if URL(string: movieURL.text ?? "") != nil{
 //            if UIApplication.shared.canOpenURL(url) {
 //                UIApplication.shared.open(url, options: [:], completionHandler: nil)
 //            }
@@ -176,6 +181,12 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
             self.movieImagesScrollView.contentSize.width = self.movieImagesScrollView.frame.width * CGFloat(i + 1)
             self.movieImagesScrollView.addSubview(imageView)
         }
+        
+        // set the count of the images & the indecator colors to the page controller
+        self.movieImagesPageController.numberOfPages = self.movieImagesResourcesArray.count
+        self.movieImagesPageController.currentPageIndicatorTintColor = UIColor.black
+        self.movieImagesPageController.pageIndicatorTintColor = UIColor.lightGray
+        
     }
     
     
@@ -209,5 +220,12 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
         cell.configure(with: self.movieDetails.cast![indexPath.row])
         
         return cell
+    }
+    
+    // this is for setup the page controller with the movie image scroll view
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        // uptate the current page when the user scrolls on the scroll view
+        let pageNumber = self.movieImagesScrollView.contentOffset.x / self.movieImagesScrollView.frame.size.width
+        self.movieImagesPageController.currentPage = Int(pageNumber)
     }
 }
