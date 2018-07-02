@@ -19,6 +19,8 @@ class MoviesTableViewCell: UITableViewCell {
     @IBOutlet weak var movieImage: UIImageView!
     @IBOutlet weak var cellBackgroundView: UIView!
     
+    var isAnimated = false
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

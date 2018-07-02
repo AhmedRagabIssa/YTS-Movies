@@ -89,16 +89,19 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
         }
         
         // MARK: - Cell animation
-        
-        // the init state of the cell
-        cell.alpha = 0
-        let transform = CATransform3DTranslate(CATransform3DIdentity, -250, 20, 0)
-        cell.layer.transform = transform
-        
-        // animate the cell to the final state
-        UIView.animate(withDuration: 1.0) {
-            cell.alpha = 1.0
-            cell.layer.transform = CATransform3DIdentity
+        let cell1 = cell as! MoviesTableViewCell
+        if !cell1.isAnimated {
+            // the init state of the cell
+            cell.alpha = 0
+            let transform = CATransform3DTranslate(CATransform3DIdentity, -250, 20, 0)
+            cell.layer.transform = transform
+            
+            // animate the cell to the final state
+            UIView.animate(withDuration: 1.0) {
+                cell.alpha = 1.0
+                cell.layer.transform = CATransform3DIdentity
+            }
+            cell1.isAnimated = true
         }
     }
     
@@ -115,8 +118,6 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
             self.searchQuery = queryTerm
             
             searchMovies()
-            
-//            searchBar.showsCancelButton = true
         }
         // hide the keyboard
         self.view.endEditing(true)
