@@ -71,7 +71,7 @@ class FilteredSearchViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     // MARK: - components init config
     func initConfiguration(){
-        self.movieTitleTextField.layer.borderColor = #colorLiteral(red: 0, green: 0.9607843137, blue: 0.4, alpha: 1)
+        self.movieTitleTextField.layer.borderColor = #colorLiteral(red: 0.4156862745, green: 0.7529411765, blue: 0.2705882353, alpha: 1)
         self.movieTitleTextField.layer.borderWidth = 2
         self.movieTitleTextField.layer.cornerRadius = 5
         self.movieTitleTextField.attributedPlaceholder = NSAttributedString(string: "Movie Title...", attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)])
@@ -79,14 +79,14 @@ class FilteredSearchViewController: UIViewController, UIPickerViewDelegate, UIPi
         self.movieTitleTextField.returnKeyType = .done
         
         
-        self.movieGenreTextField.layer.borderColor = #colorLiteral(red: 0, green: 0.9607843137, blue: 0.4, alpha: 1)
+        self.movieGenreTextField.layer.borderColor = #colorLiteral(red: 0.4156862745, green: 0.7529411765, blue: 0.2705882353, alpha: 1)
         self.movieGenreTextField.layer.borderWidth = 2
         self.movieGenreTextField.layer.cornerRadius = 5
         self.movieGenreTextField.attributedPlaceholder = NSAttributedString(string: "Movie Genre...", attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)])
         
-        self.filterButton.layer.cornerRadius = 5
+        self.filterButton.layer.cornerRadius = self.filterButton.frame.height / 2
         
-        self.cancelButton.layer.cornerRadius = 5
+        self.cancelButton.layer.cornerRadius = self.cancelButton.frame.height / 2
         self.cancelButton.layer.borderWidth = 1
         self.cancelButton.layer.borderColor = #colorLiteral(red: 0.4756349325, green: 0.4756467342, blue: 0.4756404161, alpha: 1)
         
@@ -220,11 +220,6 @@ class FilteredSearchViewController: UIViewController, UIPickerViewDelegate, UIPi
         textField.resignFirstResponder()
         
         return true
-    }
-
-    // this is for preventiong the current view controller only from rotation
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
-        return .portrait
     }
     
     /*

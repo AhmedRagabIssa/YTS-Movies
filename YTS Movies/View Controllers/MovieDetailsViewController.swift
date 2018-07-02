@@ -40,6 +40,10 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var movieImagesScrollView: UIScrollView!
     @IBOutlet weak var movieCastLbl: UILabel!
     @IBOutlet weak var movieReviewsButton: UIButton!
+    @IBOutlet weak var downloadIconImageView: UIImageView!
+    @IBOutlet weak var ratingIconImageView: UIImageView!
+    @IBOutlet weak var likeIconImageView: UIImageView!
+    @IBOutlet weak var langeuageIconImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,6 +124,23 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
         movieImagesScrollView.delegate = self
         
         self.movieReviewsButton.layer.cornerRadius = self.movieReviewsButton.frame.height / 2
+        
+        self.setStyleForMovieImageViews()
+    }
+    
+    func setStyleForMovieImageViews(){
+        
+        self.downloadIconImageView.image = self.downloadIconImageView.image?.withRenderingMode(.alwaysTemplate)
+        self.downloadIconImageView.tintColor = #colorLiteral(red: 0.4156862745, green: 0.7529411765, blue: 0.2705882353, alpha: 1)
+        
+        self.ratingIconImageView.image = self.ratingIconImageView.image?.withRenderingMode(.alwaysTemplate)
+        self.ratingIconImageView.tintColor = #colorLiteral(red: 0.4156862745, green: 0.7529411765, blue: 0.2705882353, alpha: 1)
+        
+        self.langeuageIconImageView.image = self.langeuageIconImageView.image?.withRenderingMode(.alwaysTemplate)
+        self.langeuageIconImageView.tintColor = #colorLiteral(red: 0.4156862745, green: 0.7529411765, blue: 0.2705882353, alpha: 1)
+        
+        self.likeIconImageView.image = self.likeIconImageView.image?.withRenderingMode(.alwaysTemplate)
+        self.likeIconImageView.tintColor =  #colorLiteral(red: 0.4156862745, green: 0.7529411765, blue: 0.2705882353, alpha: 1)
     }
     
     // this is the action for the navigation bar share button

@@ -19,8 +19,8 @@ class SortByCollectionViewCell: UICollectionViewCell {
     func initCellDesign(){
         self.cellShapeView.layer.cornerRadius = self.cellShapeView.frame.height / 2
         self.cellShapeView.layer.borderWidth = 1
-        self.cellShapeView.layer.borderColor = #colorLiteral(red: 0, green: 0.9098039216, blue: 0.3803921569, alpha: 1)
-        self.sortByOptionLabel.textColor = #colorLiteral(red: 0, green: 0.9098039216, blue: 0.3803921569, alpha: 1)
+        self.cellShapeView.layer.borderColor = #colorLiteral(red: 0.4156862745, green: 0.7529411765, blue: 0.2705882353, alpha: 1)
+        self.sortByOptionLabel.textColor = #colorLiteral(red: 0.4156862745, green: 0.7529411765, blue: 0.2705882353, alpha: 1)
     }
     
 //    func isSelected(selected: Bool){
@@ -38,11 +38,11 @@ class SortByCollectionViewCell: UICollectionViewCell {
         self.sortByOptionLabel.text = data
         
         if isSelected { // change the cell apperance according to it's state (selected or not)
-            self.cellShapeView.backgroundColor = #colorLiteral(red: 0, green: 0.9058823529, blue: 0.3764705882, alpha: 1)
+            self.cellShapeView.backgroundColor = #colorLiteral(red: 0.4156862745, green: 0.7529411765, blue: 0.2705882353, alpha: 1)
             self.sortByOptionLabel.textColor = #colorLiteral(red: 0.1450980392, green: 0.1411764706, blue: 0.137254902, alpha: 1)
         }else{
             self.cellShapeView.backgroundColor = #colorLiteral(red: 0.1450980392, green: 0.1411764706, blue: 0.137254902, alpha: 1)
-            self.sortByOptionLabel.textColor = #colorLiteral(red: 0, green: 0.9058823529, blue: 0.3764705882, alpha: 1)
+            self.sortByOptionLabel.textColor = #colorLiteral(red: 0.4156862745, green: 0.7529411765, blue: 0.2705882353, alpha: 1)
         }
     }
 }
