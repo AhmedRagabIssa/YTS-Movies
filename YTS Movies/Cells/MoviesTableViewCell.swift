@@ -29,6 +29,8 @@ class MoviesTableViewCell: UITableViewCell {
     
     func initDesign(){
         self.cellBackgroundView.layer.cornerRadius = 25
+        self.cellBackgroundView.layer.borderWidth = 3
+        self.cellBackgroundView.layer.borderColor = #colorLiteral(red: 0.168627451, green: 0.7921568627, blue: 0.2745098039, alpha: 1)
         self.cellBackgroundView.clipsToBounds = true
     }
 

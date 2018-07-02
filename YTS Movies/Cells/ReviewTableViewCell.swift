@@ -26,6 +26,8 @@ class ReviewTableViewCell: UITableViewCell {
     // initialize the cell design
     func initDesign(){
         self.cellBackgroundView.layer.cornerRadius = 25
+        self.cellBackgroundView.layer.borderWidth = 3
+        self.cellBackgroundView.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
     }
     
     // configure the cell given the data

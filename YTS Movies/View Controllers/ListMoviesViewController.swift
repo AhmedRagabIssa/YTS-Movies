@@ -137,6 +137,7 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
         moviesTableView.dataSource = self
         
         movieSearchBar.delegate = self
+        movieSearchBar.barTintColor = #colorLiteral(red: 0.1450980392, green: 0.1411764706, blue: 0.137254902, alpha: 1)
         
         // activity indecator init configuration
         activityIndicator.center = self.view.center
