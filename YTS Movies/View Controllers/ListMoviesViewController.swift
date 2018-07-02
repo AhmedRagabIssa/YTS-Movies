@@ -20,6 +20,8 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
     // the table view data source (movies)
     var movies: [Movie] = [Movie]()
     
+     let moviesOperations = MovieServices()
+    
     // MARK: - TODO refrech controller
     // this refresh controller is for reload the data from the table view again from the begining
     private var refreshController:UIRefreshControl = UIRefreshControl()
@@ -55,7 +57,7 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
         super.viewDidLoad()
         
         initConfiguration()
-        loadMovies()
+        loadMovies(resetDataSource: false)
     }
     
   
@@ -78,7 +80,7 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if (self.movies.count - 1 == indexPath.row) && (self.movies.count < self.currentResponseMoviesCount) {
             if tableViewIsForDisplay == .list { // make sure that the table currently is for listing moves and not for displaying the search result
-                loadMovies()
+                loadMovies(resetDataSource: false)
             } else if tableViewIsForDisplay == .search {
                 searchMovies()
             }else if tableViewIsForDisplay == .filter {
@@ -118,27 +120,7 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
         }
         // hide the keyboard
         self.view.endEditing(true)
-        searchBar.showsCancelButton = true
-
     }
-    
-//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        // empty the movies array
-//        self.movies.removeAll(keepingCapacity: false)
-//
-//        // mark the table view for displaying list of movies and not for search
-////        tableViewIsForSearch = false
-//        tableViewIsForDisplay = .list
-//
-//        loadMovies()
-//
-//        // hide the cancel button because if the user clicked it again the data will reloaded with no need for that
-//        searchBar.showsCancelButton = false
-//
-//        // hide the keyboard
-//        self.view.endEditing(true)
-//        searchBar.text = ""
-//    }
     
     // this is for hiding the keyboard when the user scroll down to the table view
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -164,10 +146,6 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
         let navBarFilterButton = UIBarButtonItem(image: #imageLiteral(resourceName: "filter"), style: .done, target: self, action: #selector(showFilterView))
         self.navigationItem.rightBarButtonItem = navBarFilterButton
         
-        let navBarRefreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshTheTableView))
-        self.navigationItem.leftBarButtonItem = navBarRefreshButton
-        
-        // MARK: - TODO
         // configure the refresh controller
         refreshController.addTarget(self, action: #selector(refreshTheTableView), for: UIControlEvents.valueChanged)
         self.moviesTableView.refreshControl = refreshController
@@ -203,19 +181,21 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
     }
     
     
-    func loadMovies(){
+    func loadMovies(resetDataSource reset: Bool){
         
         // start the activity indicator and disable the user interaction events
         startActivityIndicator()
         
         self.navigationItem.title = "Movies List"
         
-        let moviesOperations = MovieServices()
-        
         moviesOperations.listMovies(page: nextPageNumber, complation: {(listMovieResponse, error) in
             if let err = error{ // error ocured
                 print(err.localizedDescription)
             } else if let movies = listMovieResponse?.data { // the result featched sucessfully
+                if reset {
+                    // empty the movies array for the refresh controller
+                    self.movies = []
+                }
                 self.movies.append(contentsOf: movies)
                 self.currentResponseMoviesCount = listMovieResponse?.moviesCount ?? 0
                 self.moviesTableView.reloadData()
@@ -233,17 +213,10 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
     // this is the action of the refresh action
     @objc func refreshTheTableView(){
         self.tableViewIsForDisplay = .list
-        print("Refreshing.......")
         self.movieSearchBar.text = nil
         
-        // empty the movies array
-        self.movies = []
+        self.loadMovies(resetDataSource: true)
         
-        self.loadMovies()
-        // go to the top of the table view
-//        self.moviesTableView.setContentOffset(.zero, animated: false)
-//        self.moviesTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-
         self.refreshController.endRefreshing()
     }
     
@@ -252,8 +225,6 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
         startActivityIndicator()
 
         self.navigationItem.title = "Movies Search"
-        
-        let moviesOperations = MovieServices()
         
         moviesOperations.searchMovies(page: nextPageNumber, query: searchQuery, complation: {(listMovieResponse, error) in
             if let err = error{
@@ -277,8 +248,6 @@ class ListMoviesViewController: UIViewController , UITableViewDelegate, UITableV
         startActivityIndicator()
         
         self.navigationItem.title = "Filtered Movies"
-        
-        let moviesOperations = MovieServices()
         
         moviesOperations.filterMovies(page: nextPageNumber, query: self.filterQuery, genre: self.filterGenre, rate: self.filterRate, quality: self.filterQuality, sortBy: self.filterSortBy, orderBy: self.filterOrderBy, complation: {(listMovieResponse, error) in
             if let err = error{
