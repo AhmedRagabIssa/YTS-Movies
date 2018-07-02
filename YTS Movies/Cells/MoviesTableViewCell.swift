@@ -12,21 +12,24 @@ import Kingfisher
 /// This class representing cell for Movies Table View
 class MoviesTableViewCell: UITableViewCell {
     
+    // the storyboard outlets
     @IBOutlet weak var movieRating: UILabel!
     @IBOutlet weak var movieGenres: UILabel!
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var movieImage: UIImageView!
+    @IBOutlet weak var cellBackgroundView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        initDesign()
+    }
+    
+    func initDesign(){
+        self.cellBackgroundView.layer.cornerRadius = 25
+        self.cellBackgroundView.clipsToBounds = true
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
     // configure the cell given the Movie object
     func configure(with data: Movie){

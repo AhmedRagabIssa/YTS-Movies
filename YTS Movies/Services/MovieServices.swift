@@ -37,7 +37,7 @@ class MovieServices {
     
     
     func searchMovies(page: Int,query: String, complation: @escaping (_ response: ListMovieResponse?, _ Error: ErrorHandler?) -> Void){
-        let request = SearchMoviesRequest(pageNumber: page, query: query)
+        let request = ListMoviesRequest(page, query: query)
         
         serviceManager.RequestService(request){ (response, error) in
             if let err = error { // that means there is error in the request
@@ -46,6 +46,32 @@ class MovieServices {
                 complation(nil, ErrorHandler(err.localizedDescription))
             } else { // that means sucessful request almost with response
                 let json = JSON(response!)
+                let movieResponse = ListMovieResponse(json)
+                
+                if movieResponse.status == "ok"{
+                    //                    print("-------")
+                    //                    print(movieResponse.data)
+                    //                    print("-------")
+                    complation(movieResponse, nil)
+                } else {
+                    complation(nil, ErrorHandler("error in the search movies 1"))
+                }
+            }
+        }
+    }
+    
+    func filterMovies(page: Int, query: String, genre: String, rate: Int, quality: String, sortBy: String, orderBy: String, complation: @escaping (_ response: ListMovieResponse?, _ Error: ErrorHandler?) -> Void){
+        
+        let request = ListMoviesRequest(page, query: query, genre: genre, rate: rate, quality: quality, sortBy: sortBy, orderBy: orderBy)
+        
+        serviceManager.RequestService(request){ (response, error) in
+            if let err = error { // that means there is error in the request
+                print("their is error in the list movies service")
+                print(err)
+                complation(nil, ErrorHandler(err.localizedDescription))
+            } else { // that means sucessful request almost with response
+                let json = JSON(response!)
+                print(json)
                 let movieResponse = ListMovieResponse(json)
                 
                 if movieResponse.status == "ok"{

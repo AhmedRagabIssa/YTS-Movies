@@ -25,7 +25,8 @@ class ServiceManager: NSObject {
         
          Alamofire.request(request.url, method: request.method, parameters: request.parameters, encoding: (request.method == .post ? JSONEncoding.default : URLEncoding.methodDependent ), headers: request.headers).validate().responseJSON { (response) in
             
-
+            print(request.url)
+            print(request.parameters)
             switch response.result {
             case .success(let value):
                 let json = JSON(value)

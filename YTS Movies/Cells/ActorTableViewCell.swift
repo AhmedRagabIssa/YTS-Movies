@@ -9,23 +9,20 @@
 import UIKit
 import Kingfisher
 
+/// This class representing cell for Actors Table View
 class ActorTableViewCell: UITableViewCell {
 
+    // the storyboard outlets
     @IBOutlet weak var actorImage: UIImageView!
     @IBOutlet weak var actorName: UILabel!
     @IBOutlet weak var actorCharacter: UILabel!
     
+    // this url is for if the actor image is not provided
      let imageNotFound: String = "https://www.mearto.com/assets/no-image-83a2b680abc7af87cfff7777d0756fadb9f9aecd5ebda5d34f8139668e0fc842.png"
     
     override func awakeFromNib() {
         super.awakeFromNib()
         initCellDesign()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
     // init cell design configuration
@@ -42,5 +39,4 @@ class ActorTableViewCell: UITableViewCell {
         self.actorName.text = data.name
         self.actorCharacter.text = data.characterName
     }
-    
 }

@@ -39,6 +39,7 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var movieURL: UILabel!
     @IBOutlet weak var movieImagesScrollView: UIScrollView!
     @IBOutlet weak var movieCastLbl: UILabel!
+    @IBOutlet weak var movieReviewsButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,13 +53,13 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
     func startActivityIndicator(){
         self.view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
-        UIApplication.shared.beginIgnoringInteractionEvents()
+//        UIApplication.shared.beginIgnoringInteractionEvents()
     }
     
     // this func is for stop the activity indicator and enable the user interaction events
     func stopActivityIndicator(){
         activityIndicator.stopAnimating()
-        UIApplication.shared.endIgnoringInteractionEvents()
+//        UIApplication.shared.endIgnoringInteractionEvents()
     }
 
     // this func is for loading the movie details from the API using the given movie id
@@ -112,11 +113,13 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
         movieURL.addGestureRecognizer(movieURLTapGesture)
         
         // configure the navigation bar share button
-        let navBarShareButton = UIBarButtonItem(title: "Share", style: .done, target: self, action: #selector(shareMovie))
+        let navBarShareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareMovie))
         self.navigationItem.rightBarButtonItem = navBarShareButton
         
         // set the delegate of the movie images scroll view to self to configure the page controller
         movieImagesScrollView.delegate = self
+        
+        self.movieReviewsButton.layer.cornerRadius = self.movieReviewsButton.frame.height / 2
     }
     
     // this is the action for the navigation bar share button
